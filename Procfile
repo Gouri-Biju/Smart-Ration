@@ -1,1 +1,1 @@
-web: gunicorn .smartration.wsgi.py
+web: python -c "import smartration.smartration.wsgi; print('import OK')"
