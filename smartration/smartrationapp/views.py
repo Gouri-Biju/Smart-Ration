@@ -4,9 +4,10 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 import random  # Add this at the top of your file
 
-from . models import Buy, BuyDetail, Feedback, GovtStaff, Notification, Payment, Product, ProductType, Rating, RationCard, RequestRationCard, Shop, StaffDetail, Stock, StockDetail, TimeAllocate, Type, User
+from . models import Buy, BuyDetail, Feedback, GovtStaff, Login, Notification, Payment, Product, ProductType, Rating, RationCard, RequestRationCard, Shop, StaffDetail, Stock, StockDetail, TimeAllocate, Type, User
 
 # Create your views here.
+from . models import CareerGuidance, Chat, Course, Institute, JobApplication, Rating, Seminar, SeminarRequest, Student, Vacancy
 from django.contrib.auth.models import User ,Group 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
@@ -52,24 +53,22 @@ def gshome(request):
 def skhome(request):
     return render(request,'Sk/home.html')
 
-def login_post(request):
+def login(request):
     if 'login' in request.POST:
         u=request.POST['uname']
         p=request.POST['pwd']
     
         try:
-            o=authenticate(username=u,password=p)
-            login(request,o)
-            if o.groups.filter(name='Admin'):
+            o=Login.objects.get(username=u,password=p)
+            if o.usertype=='admin':
                 return HttpResponse("<script>alert('Welcome to the home page');window.location='/ahome';</script>")
-            if o.groups.filter(name='GovtStaff'):
+            if o.usertype=='gs':
                 g=GovtStaff.objects.get(login_id=o.id)
                 request.session['gid']=g.id
                 return HttpResponse("<script>alert('Welcome to the home page');window.location='/gshome';</script>")
-            if o.groups.filter(name='Shop'):
+            if o.usertype=='sk':
                 s=Shop.objects.get(login_id=o.id)
                 request.session['sid']=s.id
-                print(s.id)
                 return HttpResponse("<script>alert('Welcome to the home page');window.location='/skhome';</script>")
         except:
             return HttpResponse("<script>alert('Incorrect Username and Password');window.location='/login';</script>")
@@ -113,8 +112,7 @@ def gs(request):
         designation=request.POST['designation']
         u=request.POST['username']
         p=request.POST['password']
-        l=User.objects.create(username=u,password=make_password(p))
-        l.groups.add(Group.objects.get(name='GovtStaff'))
+        l=Login(username=u,password=p,usertype='gs')
         l.save()
         g=GovtStaff(fname=fname,lname=lname,phone=phone,email=email,place=place,designation=designation,login_id=l.pk)
         g.save()
@@ -227,8 +225,8 @@ def reg(request):
         shop=request.POST['shop']
         u=request.POST['username']
         p=request.POST['password']
-        l=User.objects.create(username=u,password=make_password(p))
-        l.groups.add(Group.objects.get(name='Shop'))
+        l=Login(username=u,password=p,usertype='sk')
+        l.save()
         g=Shop(fname=fname,lname=lname,phone=phone,email=email,place=place,shop=shop,login_id=l.pk)
         g.save()
         return HttpResponse("<script>alert('Shop regisered successfully');window.location='/';</script>")
@@ -497,8 +495,8 @@ def loginuser(request):
     password = request.POST.get('password')
     print(username, password)
 
-    queryset = authenticate(username=username, password=password)
-    login(request,queryset)
+    queryset = Login.objects.filter(username=username, password=password)
+
     if not queryset.exists():
         return JsonResponse({'status': "error", 'message': 'Invalid username or password'})
 
@@ -511,7 +509,7 @@ def loginuser(request):
         'login_id': login_obj.id
     }
 
-    if login_obj.groups.filter(name='User'):
+    if login_obj.usertype == 'user':
         try:
             user = User.objects.get(login_id=login_obj.id)
             # response['address'] = user.address
@@ -537,8 +535,8 @@ def reguser(request):
     designation=request.POST.get('designation')
     age=request.POST.get('age')
     gender=request.POST.get('gender')
-    l=User.objects.create(username=uname,password=make_password(pwd))
-    l.groups.add(Group.objects.get(name='User'))
+    l=Login(username=uname,password=pwd,usertype='user')
+    l.save()
     a=User(fname=fname,lname=lname,hname=hname,ward=ward,hno=hno,place=place,age=age,gender=gender,phone=phone,email=email,designation=designation,login_id=l.pk)
     a.save()
     response = {
