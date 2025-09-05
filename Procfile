@@ -1,1 +1,2 @@
-web: python -c "import smartration.smartration.wsgi; print('import OK')"
+cd root
+gunicorn smartration.wsgi --chdir backend
