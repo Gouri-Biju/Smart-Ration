@@ -1,14 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
+class Login(models.Model):
+        username = models.CharField(max_length=100)
+        password = models.CharField(max_length=100) 
+        usertype = models.CharField(max_length=100)
 
 class Type(models.Model):
     name = models.CharField(max_length=100, unique=True)
     details = models.CharField(max_length=100)
 
 class GovtStaff(models.Model):
-    login = models.OneToOneField(User, on_delete=models.CASCADE)
+    login = models.OneToOneField(Login, on_delete=models.CASCADE)
     fname = models.CharField(max_length=100)
     lname = models.CharField(max_length=100)
     place = models.CharField(max_length=100)
@@ -18,7 +21,7 @@ class GovtStaff(models.Model):
 
 
 class Shop(models.Model):
-    login = models.OneToOneField(User, on_delete=models.CASCADE)
+    login = models.OneToOneField(Login, on_delete=models.CASCADE)
     fname = models.CharField(max_length=100)
     lname = models.CharField(max_length=100)
     shop = models.CharField(max_length=100)
@@ -27,7 +30,7 @@ class Shop(models.Model):
     email = models.CharField(max_length=100)
 
 class User(models.Model):
-    login = models.OneToOneField(User, on_delete=models.CASCADE)
+    login = models.OneToOneField(Login, on_delete=models.CASCADE)
     fname = models.CharField(max_length=100)
     lname = models.CharField(max_length=100)
     hname = models.CharField(max_length=100)
