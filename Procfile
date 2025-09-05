@@ -1,1 +1,1 @@
-web: gunicorn smartration.smartration.wsgi
+web: gunicorn smartration.wsgi --chdir smartration
