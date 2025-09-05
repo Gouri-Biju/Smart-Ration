@@ -1,0 +1,41 @@
+{% include 'Gs/header.html' %}
+
+<!-- Requests Section -->
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Requests</h2>
+  </div>
+
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped shadow">
+        <thead class="table-light text-center">
+          <tr>
+            <th>User</th>
+            <th>Status</th>
+            <th>User Details</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in o %}
+          <tr>
+            <td>{{ i.user.fname }}</td>
+            <td>{{ i.status }}</td>
+            <td><a href="ud/{{ i.user_id }}">View user details</a></td>
+            <td>
+              {% if i.staffdetail.status %}
+                <span class="text-success fw-bold">Passed to Admin</span>
+              {% else %}
+                <span class="text-muted">Nil</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}

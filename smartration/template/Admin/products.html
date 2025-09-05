@@ -1,0 +1,110 @@
+{% include 'Admin/header.html'%}
+
+<!-- Product Form Section -->
+<section id="contact" class="contact section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>{% if z %}Edit Product{% else %}Add Product{% endif %}</h2>
+  </div>
+
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        <form method="post" id="productForm" onsubmit="return validateProductForm()">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="product" class="form-label">Product Name</label>
+              <input required type="text" id="product" name="product" class="form-control"
+                value="{% if z %}{{ z.product }}{% endif %}" placeholder="Enter product name">
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="amount" class="form-label">Amount (₹)</label>
+              <input required type="text" id="amount" name="amount" class="form-control"
+                value="{% if z %}{{ z.amount }}{% endif %}" placeholder="Enter amount">
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label for="details" class="form-label">Details</label>
+              <textarea id="details" name="details" class="form-control" rows="2" placeholder="Enter details"
+                required>{% if z %}{{ z.details }}{% endif %}</textarea>
+            </div>
+          </div>
+
+          <div class="error text-danger mb-3 text-center" id="errorMsg"></div>
+
+          <div class="text-center">
+            {% if z %}
+              <input type="submit" name="edit" value="Update Product"
+                style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+            {% else %}
+              <input type="submit" name="submit" value="Add Product"
+                style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+            {% endif %}
+          </div>
+        </form>
+      </div>
+
+      <!-- Product Table -->
+      <div class="container mt-5">
+        <h2 class="text-center">Existing Products</h2>
+        <table class="table table-striped table-bordered mt-3">
+          <thead class="table-light">
+            <tr>
+              <th>Product ID</th>
+              <th>Product</th>
+              <th>Details</th>
+              <th>Amount (₹)</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in o %}
+            <tr>
+              <td>{{ i.id }}</td>
+              <td>{{ i.product }}</td>
+              <td>{{ i.details }}</td>
+              <td>{{ i.amount }}</td>
+              <td><a href="pedit/{{ i.id }}">Edit</a></td>
+              <td><a href="pdelete/{{ i.id }}">Delete</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript Validation -->
+<script>
+  function validateProductForm() {
+    const get = id => document.getElementById(id).value.trim();
+    const product = get('product');
+    const details = get('details');
+    const amount = get('amount');
+    const errorMsg = document.getElementById('errorMsg');
+
+    const lettersOnly = /^[A-Za-z\s]+$/;
+    const amountRegex = /^\d+(\.\d{1,2})?$/;
+
+    if (!product || !details || !amount) {
+      errorMsg.textContent = "All fields are required.";
+      return false;
+    }
+    if (!lettersOnly.test(product)) {
+      errorMsg.textContent = "Product name should contain only letters and spaces.";
+      return false;
+    }
+    if (!amountRegex.test(amount) || parseFloat(amount) <= 0) {
+      errorMsg.textContent = "Amount must be a positive number (max 2 decimal places).";
+      return false;
+    }
+
+    errorMsg.textContent = "";
+    return true;
+  }
+</script>
+
+{% include 'footer.html' %}

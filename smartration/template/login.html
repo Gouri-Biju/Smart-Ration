@@ -1,0 +1,36 @@
+{% include 'publicheader.html' %}
+<br><br><br>
+
+<!-- Shop Registration Section -->
+<section id="contact" class="contact section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Login</h2>
+  </div>
+
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        <form method="post" id="shop-form">
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="fname" class="form-label">Login</label>
+              <input type="text" name="uname" class="form-control" id="fname" placeholder="Enter first name" required>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="pwd" class="form-control" id="password" placeholder="Choose a password" required>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <input type="submit" name="login" value="Login"
+              style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% include 'footer.html' %}

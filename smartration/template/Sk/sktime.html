@@ -1,0 +1,38 @@
+{% include 'Sk/header.html' %}
+
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Time Allocation</h2>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <table class="table table-bordered shadow">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Verify</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in a %}
+        <tr>
+          <td>{{ i.user.fname }}</td>
+          <td>{{ i.date }}</td>
+          <td>{{ i.time }}</td>
+            {% if i.status == 'requested by user' %}
+          <td><a href="viewslotproducts/{{i.id}}">View products and verify slot</a></td>
+            {% else %}
+            <td>
+              <span class="text-muted">{{ i.status }}</span>
+                    </td>
+                    {%endif%}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% include 'footer.html' %}

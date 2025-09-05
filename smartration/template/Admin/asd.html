@@ -1,0 +1,41 @@
+{% include 'Admin/header.html' %}
+
+<!-- Government Staff Section -->
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Government Staff</h2>
+  </div>
+
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped shadow">
+        <thead class="table-light text-center">
+          <tr>
+            <th>Staff ID</th>
+            <th>Login ID</th>
+            <th>Name</th>
+            <th>Place</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Designation</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.login_id }}</td>
+            <td>{{ i.fname }} {{ i.lname }}</td>
+            <td>{{ i.place }}</td>
+            <td>{{ i.phone }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.designation }}</td>
+            <td>{{ i.login.username }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}

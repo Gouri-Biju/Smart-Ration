@@ -1,0 +1,54 @@
+{% include 'Gs/header.html' %}
+
+<section id="notification-entry" class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Enter Notification</h2>
+  </div>
+
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        <form method="post" id="notifyForm" onsubmit="return validateNotifyForm()">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <label for="n" class="form-label">Notification</label>
+              <input type="text" name="n" class="form-control" id="n" placeholder="Enter notification title" required>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label for="d" class="form-label">Details</label>
+              <textarea name="d" class="form-control" id="d" rows="2" placeholder="Enter notification details" required></textarea>
+            </div>
+          </div>
+
+          <div class="error" id="errorMsg"></div>
+
+          <div class="text-center">
+            <input type="submit" name="submit" value="Post Notification"
+              class="submit-btn">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript Validation -->
+<script>
+  function validateNotifyForm() {
+    const title = document.getElementById("n").value.trim();
+    const detail = document.getElementById("d").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+
+    if (!title || !detail) {
+      errorMsg.textContent = "Both Notification and Details are required.";
+      return false;
+    }
+
+    errorMsg.textContent = "";
+    return true;
+  }
+</script>
+
+{% include 'footer.html' %}

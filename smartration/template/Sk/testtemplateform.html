@@ -1,0 +1,68 @@
+{% include 'publicheader.html' %}
+{% include 'Sk/header.html'%}
+<br><br><br>
+<!-- Shop Registration Section -->
+<section id="contact" class="contact section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Shop Registration</h2>
+  </div>
+
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        <form method="post" action="{% url 'reg' %}" id="shop-form">
+          {% csrf_token %}
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="fname" class="form-label">First Name</label>
+              <input type="text" name="fname" class="form-control" id="fname" placeholder="Enter first name" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="lname" class="form-label">Last Name</label>
+              <input type="text" name="lname" class="form-control" id="lname" placeholder="Enter last name" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="shop" class="form-label">Shop Name</label>
+              <input type="text" name="shop" class="form-control" id="shop" placeholder="Enter shop name" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="place" class="form-label">Place</label>
+              <input type="text" name="place" class="form-control" id="place" placeholder="Enter place" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" name="phone" class="form-control" id="phone" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" name="email" class="form-control" id="email" placeholder="Enter email address" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" name="username" class="form-control" id="username" placeholder="Choose a username" required>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" id="password" placeholder="Choose a password" required>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <input type="submit" name="submit" value="Register Shop"
+              style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}

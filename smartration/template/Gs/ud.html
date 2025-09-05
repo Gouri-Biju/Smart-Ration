@@ -1,0 +1,60 @@
+{% include 'Gs/header.html' %}
+
+<!-- User Details Section -->
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>User Details</h2>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive mb-4">
+      <table class="table table-bordered shadow">
+        <thead class="table-light">
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>House No.</th>
+            <th>House Name</th>
+            <th>Ward</th>
+            <th>Place</th>
+            <th>Age</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Designation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.fname }} {{ i.lname }}</td>
+            <td>{{ i.hno }}</td>
+            <td>{{ i.hname }}</td>
+            <td>{{ i.ward }}</td>
+            <td>{{ i.place }}</td>
+            <td>{{ i.age }}</td>
+            <td>{{ i.phone }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.designation }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Remark Form -->
+    <div class="contact-form-wrapper bg-light p-4 rounded shadow col-lg-6 mx-auto">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="d" class="form-label">Add Remark</label>
+          <input type="text" name="d" id="d" class="form-control" placeholder="Enter remark" required>
+        </div>
+        <div class="text-center">
+          <input type="submit" name="submit" value="Forwad To Admin"
+            style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}

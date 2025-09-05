@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% include 'Sk/header.html'%}
+{% include 'Sk/header.html'%}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopkeeper Registration</title>
+  <style>
+    body{font-family:Arial, sans-serif; padding:30px; background:#f2f2f2;}
+    h2{color:#333;}
+    form{background:#fff; padding:20px; border-radius:8px; margin-bottom:30px;
+         box-shadow:0 2px 6px rgba(0,0,0,.1);}
+    input{width:100%; padding:10px; margin:8px 0;
+          border:1px solid #ccc; border-radius:6px;}
+    button{padding:10px 20px; background:#007bff; color:#fff; border:none;
+           border-radius:6px; cursor:pointer;}
+    button:hover{background:#0056b3;}
+    .error{color:red; font-size:.9em; margin-bottom:10px;}
+  </style>
+</head>
+<body>
+
+<h2>Shopkeeper Registration</h2>
+
+<form method="post" id="shopForm" onsubmit="return validateShopForm()">
+  <label for="fname">First Name:</label>
+  <input required type="text" id="fname" name="fname">
+
+  <label for="lname">Last Name:</label>
+  <input required type="text" id="lname" name="lname">
+
+  <label for="shop">Shop Name:</label>
+  <input required type="text" id="shop" name="shop">
+
+  <label for="place">Place:</label>
+  <input required type="text" id="place" name="place">
+
+  <label for="phone">Phone:</label>
+  <input required type="tel" id="phone" name="phone"
+         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+         pattern="\d{7,15}" maxlength="15">
+
+  <label for="email">Email:</label>
+  <input required type="email" id="email" name="email">
+
+  <label for="username">Username:</label>
+  <input required type="text" id="username" name="username">
+
+  <label for="password">Password:</label>
+  <input required type="password" id="password" name="password">
+
+  <div class="error" id="errorMsg"></div>
+  <input required type="submit" name="submit" id="">
+</form>
+
+<script>
+function validateShopForm() {
+  const get = id => document.getElementById(id).value.trim();
+  const errorMsg = document.getElementById('errorMsg');
+
+  const fname    = get('fname');
+  const lname    = get('lname');
+  const shop     = get('shop');
+  const place    = get('place');
+  const phone    = get('phone');
+  const email    = get('email');
+  const username = get('username');
+  const password = get('password');
+
+  const lettersOnly = /^[A-Za-z\s]+$/;
+  const phoneRegex  = /^\d{7,15}$/;
+  const pwdRegex    = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+
+  if (!fname || !lname || !shop || !place || !phone ||
+      !email || !username || !password) {
+    errorMsg.textContent = "All fields are required.";
+    return false;
+  }
+  if (!lettersOnly.test(fname) || !lettersOnly.test(lname)) {
+    errorMsg.textContent = "Name fields may contain letters and spaces only.";
+    return false;
+  }
+  if (!lettersOnly.test(shop)) {
+    errorMsg.textContent = "Shop name may contain letters and spaces only.";
+    return false;
+  }
+  if (!lettersOnly.test(place)) {
+    errorMsg.textContent = "Place may contain letters and spaces only.";
+    return false;
+  }
+  if (!phoneRegex.test(phone)) {
+    errorMsg.textContent = "Phone must be 7–15 digits.";
+    return false;
+  }
+  // Email input type already validates pattern
+  if (!lettersOnly.test(username) && username.length < 3) {
+    errorMsg.textContent = "Username must be at least 3 letters.";
+    return false;
+  }
+  if (!pwdRegex.test(password)) {
+    errorMsg.textContent =
+      "Password must be ≥8 characters and include letters, digits, and special characters.";
+    return false;
+  }
+
+  errorMsg.textContent = "";
+  return true; // allow submission
+}
+</script>
+
+</body>
+</html>
+{%include 'footer.html'%}

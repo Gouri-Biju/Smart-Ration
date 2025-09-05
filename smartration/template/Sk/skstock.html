@@ -1,0 +1,60 @@
+{% include 'Sk/header.html' %}
+
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Products List</h2>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <table class="table table-bordered shadow">
+      <thead class="table-light">
+        <tr>
+          <th>Product ID</th>
+          <th>Product</th>
+          <th>Details</th>
+          <th>Available Stock</th>
+          <th>Add / Update Stock</th>
+          <th>Delete Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in m %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.product }}</td>
+          <td>{{ i.details }}</td>
+          <td>
+            {% if i.stockdetail.kiloorlitter %}
+              {{ i.stockdetail.kiloorlitter }}
+            {% else %}
+              <span class="text-muted">Stock not added yet</span>
+            {% endif %}
+          </td>
+          <td>
+            <form method="post" class="d-flex align-items-center gap-2">
+              {% csrf_token %}
+              <input type="hidden" name="stid" value="{{ i.stockdetail.id }}">
+              <input type="hidden" name="pid" value="{{ i.id }}">
+              <input required type="number" name="kl" class="form-control" style="max-width: 150px;" placeholder="In kilo or litre">
+              {% if i.stockdetail.kiloorlitter %}
+              <input type="submit" name="submit" value="Update" class="btn btn-primary">
+            {% else %}
+              <input type="submit" name="submit" value="Add" class="btn btn-primary">
+            {% endif %}
+            </form>
+          </td>
+          <td>
+            {% if i.stockdetail.kiloorlitter %}
+              <a href="stdelete/{{ i.id }}" class="btn btn-danger btn-sm">Delete Stock</a>
+            {% else %}
+              <span class="text-muted">Not available</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% include 'footer.html' %}

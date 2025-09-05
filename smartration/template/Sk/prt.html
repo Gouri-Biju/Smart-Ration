@@ -1,0 +1,84 @@
+{% include 'Sk/header.html' %}
+
+<section id="product-filter" class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Products Filtered by Type</h2>
+  </div>
+
+  <!-- Filter Form -->
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        <form method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-8 mb-3">
+              <label for="type" class="form-label">Select Card Type</label>
+              <select style="border: 2px solid #555; padding: 5px;" name="type" id="type" class="form-control" required>
+                <option disabled selected>Select a type</option>
+                {% for j in t %}
+                <option value="{{ j.id }}">{{ j.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-4 mb-3 d-flex align-items-end">
+              <input type="submit" name="submit" value="Filter" class="submit-btn w-100">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtered Products -->
+  <div class="container mt-5" data-aos="fade-up">
+    {% if z %}
+    <h4 class="text-center mb-4">Filtered Products of <strong>{{ a.name }}</strong></h4>
+    <table class="table table-bordered shadow">
+      <thead class="table-light">
+        <tr>
+          <th>Product ID</th>
+          <th>Product</th>
+          <th>Details</th>
+          <th>Amount (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in z %}
+        <tr>
+          <td>{{ i.product.id }}</td>
+          <td>{{ i.product.product }}</td>
+          <td>{{ i.product.details }}</td>
+          <td>{{ i.product.amount }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h4 class="text-center mb-4">All Products</h4>
+    <table class="table table-bordered shadow">
+      <thead class="table-light">
+        <tr>
+          <th>Product ID</th>
+          <th>Product</th>
+          <th>Details</th>
+          <th>Amount (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in o %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.product }}</td>
+          <td>{{ i.details }}</td>
+          <td>{{ i.amount }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</section>
+
+{% include 'footer.html' %}

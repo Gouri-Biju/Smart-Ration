@@ -1,0 +1,48 @@
+{% include 'Sk/header.html' %}
+
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Search Ration Card Products</h2>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <form method="post" class="mb-4">
+      {% csrf_token %}
+      <div class="row justify-content-center">
+        <div class="col-md-6 mb-3">
+          <label for="n" class="form-label">Enter Ration Card Number</label>
+          <input required type="number" name="n" id="n" class="form-control" placeholder="e.g. 12345678">
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <input required type="submit" name="submit" class="btn btn-primary w-100" value="Search">
+        </div>
+      </div>
+    </form>
+
+    {% if z %}
+    <h4 class="text-center mb-3">Products for Ration Card #{{ z }}</h4>
+    <table class="table table-bordered shadow">
+      <thead class="table-light">
+        <tr>
+          <th>Product ID</th>
+          <th>Product</th>
+          <th>Details</th>
+          <th>Amount (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ z.id }}</td>
+          <td>{{ z.product.product }}</td>
+          <td>{{ z.product.details }}</td>
+          <td>{{ z.product.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+    {% else %}
+    <p class="text-center text-muted">Please enter a valid ration card number to view products.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% include 'footer.html' %}

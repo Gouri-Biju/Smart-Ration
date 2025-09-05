@@ -1,0 +1,190 @@
+{% include 'Admin/header.html' %}
+
+<!-- Form Section -->
+<section id="contact" class="contact section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>{% if z %}Edit{% else %}Add New{% endif %} Government Staff</h2>
+  </div>
+
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        <form method="post" id="staffForm" onsubmit="return validateStaffForm()">
+          {% csrf_token %}
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="fname" class="form-label">First Name</label>
+              <input type="text" id="fname" name="fname" class="form-control" placeholder="Enter first name"
+                value="{{ z.fname|default_if_none:'' }}" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="lname" class="form-label">Last Name</label>
+              <input type="text" id="lname" name="lname" class="form-control" placeholder="Enter last name"
+                value="{{ z.lname|default_if_none:'' }}" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="place" class="form-label">Place</label>
+              <input type="text" id="place" name="place" class="form-control" placeholder="Enter place"
+                value="{{ z.place|default_if_none:'' }}" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter phone number"
+                value="{{ z.phone|default_if_none:'' }}" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="text" id="email" name="email" class="form-control" placeholder="Enter email"
+                value="{{ z.email|default_if_none:'' }}" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="designation" class="form-label">Designation</label>
+              <input type="text" id="designation" name="designation" class="form-control"
+                placeholder="Enter designation" value="{{ z.designation|default_if_none:'' }}" required>
+            </div>
+
+            {% if not z %}
+            <div class="col-md-6 mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" id="username" name="username" class="form-control" placeholder="Enter username"
+                required>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Enter password"
+                required>
+              <small class="text-muted">Must be ≥8 characters, include uppercase, lowercase, digit, and special
+                character.</small>
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="error text-center" id="errorMsg"></div>
+
+          <div class="text-center">
+{% if z %}
+  <input type="submit" name="edit" value="Update" class="submit-btn"
+    style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+{% else %}
+  <input type="submit" name="submit" value="Add Staff" class="submit-btn"
+    style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+{% endif %}
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Table Section -->
+<div class="container">
+  <h2 class="text-center mt-5">Existing Government Staff</h2>
+  <table class="table table-bordered table-striped mt-3 bg-white shadow-sm">
+    <thead class="thead-light">
+      <tr>
+        <th>Staff ID</th>
+        <th>Login ID</th>
+        <th>Name</th>
+        <th>Place</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Designation</th>
+        <th>Username</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in o %}
+      <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.login_id }}</td>
+        <td>{{ i.fname }} {{ i.lname }}</td>
+        <td>{{ i.place }}</td>
+        <td>{{ i.phone }}</td>
+        <td>{{ i.email }}</td>
+        <td>{{ i.designation }}</td>
+        <td>{{ i.login.username }}</td>
+        <td><a href="gsedit/{{ i.id }}">Edit</a></td>
+        <td><a href="gsdelete/{{ i.id }}">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Validation Script -->
+<script>
+  function validateStaffForm() {
+    const get = id => document.getElementById(id)?.value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+
+    const fname = get("fname");
+    const lname = get("lname");
+    const place = get("place");
+    const phone = get("phone");
+    const email = get("email");
+    const designation = get("designation");
+
+    const username = document.getElementById("username") ? get("username") : null;
+    const password = document.getElementById("password") ? get("password") : null;
+
+    const lettersOnly = /^[A-Za-z\s]+$/;
+    const phoneRegex = /^\d{10}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    if (!fname || !lname || !place || !phone || !email || !designation) {
+      errorMsg.textContent = "All fields are required.";
+      return false;
+    }
+
+    if (!lettersOnly.test(fname) || !lettersOnly.test(lname)) {
+      errorMsg.textContent = "Name fields can only contain letters and spaces.";
+      return false;
+    }
+
+    if (!lettersOnly.test(place)) {
+      errorMsg.textContent = "Place can only contain letters and spaces.";
+      return false;
+    }
+
+    if (!phoneRegex.test(phone)) {
+      errorMsg.textContent = "Phone number must be exactly 10 digits.";
+      return false;
+    }
+
+    if (!emailRegex.test(email)) {
+      errorMsg.textContent = "Enter a valid email address.";
+      return false;
+    }
+
+    if (!lettersOnly.test(designation)) {
+      errorMsg.textContent = "Designation must contain only letters and spaces.";
+      return false;
+    }
+
+    if (username && (!username.length || username.includes(" "))) {
+      errorMsg.textContent = "Username is required and must not contain spaces.";
+      return false;
+    }
+
+    if (password && !pwdRegex.test(password)) {
+      errorMsg.textContent =
+        "Password must be ≥8 characters, include uppercase, lowercase, digit, and special character.";
+      return false;
+    }
+
+    errorMsg.textContent = "";
+    return true;
+  }
+</script>
+
+{% include 'footer.html' %}

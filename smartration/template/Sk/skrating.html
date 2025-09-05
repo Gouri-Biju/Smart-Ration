@@ -1,0 +1,30 @@
+{% include 'Sk/header.html' %}
+
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>User Ratings</h2>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <table class="table table-bordered shadow">
+      <thead class="table-light">
+        <tr>
+          <th>User Name</th>
+          <th>Rated</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in a %}
+        <tr>
+          <td>{{ i.user.fname }}</td>
+          <td>{{ i.rated }}</td>
+          <td>{{ i.date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% include 'footer.html' %}

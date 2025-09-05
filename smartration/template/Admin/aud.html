@@ -1,0 +1,45 @@
+{% include 'Admin/header.html' %}
+
+<!-- User Details Section -->
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>User Details</h2>
+  </div>
+
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped shadow">
+        <thead class="table-light text-center">
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>House No.</th>
+            <th>House Name</th>
+            <th>Ward</th>
+            <th>Place</th>
+            <th>Age</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Designation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.fname }} {{ i.lname }}</td>
+            <td>{{ i.hno }}</td>
+            <td>{{ i.house }}</td>
+            <td>{{ i.ward }}</td>
+            <td>{{ i.place }}</td>
+            <td>{{ i.age }}</td>
+            <td>{{ i.phone }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.designation }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}

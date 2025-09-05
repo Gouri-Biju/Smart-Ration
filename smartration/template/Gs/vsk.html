@@ -1,0 +1,41 @@
+{% include 'Gs/header.html' %}
+
+<!-- Section Title -->
+<section id="shopkeeper" class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Shop Keepers</h2>
+  </div>
+
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive">
+      <table class="table table-bordered shadow">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Place</th>
+            <th>Shop</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>View Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in o %}
+          <tr>
+            <td>{{ i.fname }} {{ i.lname }}</td>
+            <td>{{ i.place }}</td>
+            <td>{{ i.shop }}</td>
+            <td>{{ i.phone }}</td>
+            <td>{{ i.email }}</td>
+            <td>
+              <a href="vsd/{{ i.id }}" class="btn btn-sm btn-outline-primary">View Stock Details</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}

@@ -1,0 +1,40 @@
+{% include 'Gs/header.html' %}
+
+<section id="stock-details" class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Stock Details</h2>
+  </div>
+
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive">
+      <table class="table table-bordered shadow">
+        <thead class="table-light">
+          <tr>
+            <th>Product ID</th>
+            <th>Product</th>
+            <th>Details</th>
+            <th>Available Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in o %}
+          <tr>
+            <td>{{ i.stockdetail.id }}</td>
+            <td>{{ i.stockdetail.product.product }}</td>
+            <td>{{ i.stockdetail.product.details }}</td>
+            <td>
+              {% if i.stockdetail.kiloorlitter %}
+                {{ i.stockdetail.kiloorlitter }}
+              {% else %}
+                <span class="text-danger">Stock not added yet</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}

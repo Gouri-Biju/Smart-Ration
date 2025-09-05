@@ -1,0 +1,55 @@
+{% include 'Admin/header.html' %}
+
+<!-- Page Title -->
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Ration Card Requests</h2>
+  </div>
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped shadow">
+        <thead class="table-light text-center">
+          <tr>
+            <th colspan="2">User</th>
+            <th>Status</th>
+            <th colspan="2">Forwarded Staff</th>
+            <th>Remark by Staff</th>
+            <th>Generate Ration Card</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in o %}
+          {%if i.status == 'Forwarded by staff' %}
+          <tr>
+            <td>{{ i.request.user.fname }}</td>
+            <td><a href="aud/{{ i.request.user.id }}">Details</a></td>
+            <td>{{ i.status }}</td>
+            <td>{{ i.staff_id.fname }}</td>
+            <td><a href="asd/{{ i.staff_id.id}}">Details</a></td>
+            <td>{{ i.detail }}</td>
+            <td>
+              <form method="post" class="d-flex flex-column align-items-start gap-2">
+                {% csrf_token %}
+                <input type="hidden" name="rid" value="{{ i.request_id }}">
+                <label for="type_{{ i.request_id }}">Assign Type</label>
+                <select style="border: 2px solid #555; padding: 5px;"name="type" id="type_{{ i.request_id }}" class="form-select" required>
+                  <option value="">Select type</option>
+                  {% for j in t %}
+                    <option value="{{ j.id }}">{{ j.name }}</option>
+                  {% endfor %}
+                </select>
+                <input type="submit" name="submit" value="Generate"
+                  style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 8px 20px; border-radius: 30px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              </form>
+            </td>
+          </tr>
+          {%else%}
+          <p>No requests</p>
+          {%endif%}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</section>
+
+{% include 'footer.html' %}

@@ -1,0 +1,112 @@
+{% include 'Admin/header.html'%}
+
+<!-- Centered Form Layout -->
+<section id="contact" class="contact section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Manage Ration Card Type</h2>
+  </div>
+
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        {% if z %}
+        <form id="typeForm" method="POST" onsubmit="return validateForm()">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="type" class="form-label">Type Name</label>
+              <input required type="text" name="name" class="form-control" id="type" value="{{ z.name }}" placeholder="Enter type name">
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="details" class="form-label">Details</label>
+              <textarea name="d" class="form-control" id="details" rows="1" placeholder="Enter details" required>{{ z.details }}</textarea>
+            </div>
+          </div>
+
+          <div class="error" id="errorMsg"></div>
+          <div class="text-center">
+            <input type="submit" name="edit" value="Update Type" class="submit-btn">
+          </div>
+        </form>
+
+        {% else %}
+        <form id="typeForm" method="POST" onsubmit="return validateForm()">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="type" class="form-label">Type Name</label>
+              <input required type="text" name="name" class="form-control" id="type" placeholder="Enter type name">
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="details" class="form-label">Details</label>
+              <textarea name="d" class="form-control" id="details" rows="1" placeholder="Enter details" required></textarea>
+            </div>
+          </div>
+
+          <div class="error" id="errorMsg"></div>
+          <div class="text-center">
+            <input type="submit" name="submit" value="Add Type" class="submit-btn">
+          </div>
+        </form>
+        {% endif %}
+      </div>
+      <div class="container">
+  <h2 class="text-center mt-5">Existing Ration Card Types</h2>
+   <table class="table" class="table">
+    <thead>
+      <tr>
+        <th>Type ID</th>
+        <th>Type</th>
+        <th>Details</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in o %}
+      <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.details }}</td>
+        <td><a href="rtedit/{{ i.id }}">Edit</a></td>
+        <td><a href="rtdelete/{{ i.id }}">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- Table Layout (Unchanged) -->
+
+
+<!-- Validation Script -->
+<script>
+  function validateForm() {
+    const type = document.getElementById("type").value.trim();
+    const details = document.getElementById("details").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+
+    if (!type || !details) {
+      errorMsg.textContent = "Both Type Name and Details are required.";
+      return false;
+    }
+
+    const lettersOnly = /^[A-Za-z\s]+$/;
+    if (!lettersOnly.test(type)) {
+      errorMsg.textContent = "Type Name can contain letters and spaces only.";
+      return false;
+    }
+
+    errorMsg.textContent = "";
+    return true;
+  }
+</script>
+
+</body>
+</html>
+{% include 'footer.html' %}

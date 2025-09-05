@@ -1,0 +1,122 @@
+{% include 'Gs/header.html' %}
+
+<!-- Assign Product Section -->
+<section id="assign-product" class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Assign Product to Card Type</h2>
+  </div>
+
+  <div class="container d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-8 col-md-10">
+      <div class="contact-form-wrapper bg-light p-4 rounded shadow">
+        <form method="post" onsubmit="return validateAssignForm()">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="product" class="form-label">Product</label>
+              <select style="border: 2px solid #555; padding: 5px;"name="p" id="product" class="form-control" required>
+                {% if z %}
+                  <option value="{{ z.id }}">{{ z.product.product }}</option>
+                {% else %}
+                  {% for i in o %}
+                    <option value="{{ i.id }}">{{ i.product }}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="" class="form-label">Kilo or Litre</label>
+              <input required type="number" step="0.01" name="kl" id="" class="form-control"
+                     value="{% if z %}{{ z.kiloorlitter }}{% endif %}" placeholder="Enter kg or litre">
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="month" class="form-label">Month</label>
+              <input required type="number" min="1" max="12" name="month" id="month" class="form-control"
+                     value="{% if z %}{{ z.forthemonth }}{% endif %}" placeholder="Enter month">
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="type" class="form-label">Card Type</label>
+              <select style="border: 2px solid #555; padding: 5px;"name="type" id="type" class="form-control" required>
+                <option value="">Select Type</option>
+                {% for j in t %}
+                  <option value="{{ j.id }}">{{ j.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="error text-danger text-center mb-3" id="errorMsg"></div>
+
+          <div class="text-center">
+            <input type="submit" name="{% if z %}submit{% else %}submit{% endif %}" value="{% if z %}Update{% else %}Assign{% endif %}"
+              style="background-color: rgb(192, 141, 33); color: black; border: none; padding: 10px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s;">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Table of Assigned Products -->
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Assigned Products List</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered shadow">
+      <thead class="table-light">
+        <tr>
+          <th>Card Type</th>
+          <th>Product</th>
+          <th>Kilo or Litre</th>
+          <th>Month</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for k in q %}
+        <tr>
+          <td>{{ k.type.name }}</td>
+          <td>{{ k.product.product }}</td>
+          <td>{{ k.kiloorlitter }}</td>
+          <td>{{ k.forthemonth }}</td>
+          <td><a href="ptedit/{{ k.id }}">Update</a></td>
+          <td><a href="ptdelete/{{ k.id }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- JavaScript Validation -->
+<script>
+function validateAssignForm() {
+  const kl = document.getElementById("kl").value.trim();
+  const month = document.getElementById("month").value.trim();
+  const errorMsg = document.getElementById("errorMsg");
+
+  const klRegex = /^[A-Za-z\s]+$/;
+  const monthInt = parseInt(month);
+
+  if (!kl || !month) {
+    errorMsg.textContent = "All fields are required.";
+    return false;
+  }
+  if (!klRegex.test(kl)) {
+    errorMsg.textContent = "Kilo or Litre field must contain only letters (e.g., 'Kg' or 'Litre').";
+    return false;
+  }
+  if (isNaN(monthInt) || monthInt < 1 || monthInt > 12) {
+    errorMsg.textContent = "Please enter a valid month (1–12).";
+    return false;
+  }
+
+  errorMsg.textContent = "";
+  return true;
+}
+</script>
+
+{% include 'footer.html' %}

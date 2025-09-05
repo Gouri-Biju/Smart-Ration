@@ -1,0 +1,33 @@
+{% include 'Admin/header.html' %}
+
+<!-- Feedback Section -->
+<section class="section">
+  <div class="container section-title text-center" data-aos="fade-up">
+    <h2>Feedback</h2>
+  </div>
+
+  <div class="container mt-4" data-aos="fade-up" data-aos-delay="100">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped shadow">
+        <thead class="table-light text-center">
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Feedback</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in o %}
+          <tr>
+            <td>{{ i.date }}</td>
+            <td>{{ i.user.fname }}</td>
+            <td>{{ i.feedback }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% include 'footer.html' %}
