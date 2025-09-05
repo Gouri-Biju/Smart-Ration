@@ -1,1 +1,1 @@
-web: gunicorn smartration.wsgi
+web: gunicorn smartration.smartration.wsgi
