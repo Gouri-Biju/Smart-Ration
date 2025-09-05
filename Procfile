@@ -1,2 +1,2 @@
 cd root
-gunicorn smartration.wsgi --chdir backend
+gunicorn smartration.wsgi --chdir smartration
