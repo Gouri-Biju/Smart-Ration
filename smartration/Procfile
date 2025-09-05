@@ -1,1 +1,0 @@
-web: gunicorn smartration\smartration\wsgi.py
