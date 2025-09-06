@@ -8,7 +8,7 @@ urlpatterns = [
     path('ahome',views.ahome),
     path('gshome',views.gshome),
     path('skhome',views.skhome),
-    path('login',views.login_post, name='login'),
+    path('login',views.login, name='login'),
     path('rtype',views.rtype),
     path('gs',views.gs),
     path('products',views.products),
