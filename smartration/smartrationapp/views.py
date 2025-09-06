@@ -42,7 +42,7 @@ from django.contrib.auth.hashers import check_password, make_password
 
 
 def home(request):
-    return render(request,'instant/index.html')
+    return render(request,'Instant/index.html')
 
 def ahome(request):
     return render(request,'Admin/home.html')
