@@ -58,7 +58,7 @@ ROOT_URLCONF = 'smartration.smartration.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['template'],
+        'DIRS': [os.path.join(BASE_DIR, 'smartration.smartrationapp', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
