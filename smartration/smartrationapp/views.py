@@ -7,7 +7,7 @@ import random  # Add this at the top of your file
 from . models import Buy, BuyDetail, Feedback, GovtStaff, Login, Notification, Payment, Product, ProductType, Rating, RationCard, RequestRationCard, Shop, StaffDetail, Stock, StockDetail, TimeAllocate, Type, User
 
 # Create your views here.
-from . models import CareerGuidance, Chat, Course, Institute, JobApplication, Rating, Seminar, SeminarRequest, Student, Vacancy
+from . models import *
 from django.contrib.auth.models import User ,Group 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
