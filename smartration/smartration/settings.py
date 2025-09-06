@@ -18,7 +18,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 print("BASE_DIR:", BASE_DIR)
-print("Templates folder exists:", os.path.exists(os.path.join(BASE_DIR, 'templates', 'Instant', 'index.html')))
+print("Templates folder exists:", os.path.exists(os.path.join(BASE_DIR, 'template', 'Instant', 'index.html')))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -61,7 +61,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # <-- points to root templates
+        'DIRS': [os.path.join(BASE_DIR, 'template')],  # <-- points to root templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
