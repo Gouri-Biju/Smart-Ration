@@ -41,8 +41,13 @@ from django.contrib.auth.hashers import check_password, make_password
 #     return JsonResponse("sucess")
 
 
+import os
+from django.http import HttpResponse
+
 def home(request):
-    return render(request,'Instant/index.html')
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates', 'Instant', 'index.html')
+    exists = os.path.exists(path)
+    return HttpResponse(f"Template exists: {exists}, path: {path}")
 
 def ahome(request):
     return render(request,'Admin/home.html')
