@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-uj6ji)tx#$q$cw=i-7)yw#4h_%cm)lcd$eujq3fjr*2z2wy$fa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['smart-ration-a53u.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'smartration.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
+        default=('postgresql://postgres:Gouri%401902@db.wargbclsjsfomlcopict.supabase.co:5432/postgres')
     )
 }
 
