@@ -521,30 +521,88 @@ def loginuser(request):
 
     return JsonResponse(response)
 
-def reguser(request):
-    uname=request.POST.get('uname')
-    pwd=request.POST.get('password')
-    fname=request.POST.get('first_name')
-    lname=request.POST.get('last_name')
-    hname=request.POST.get('hname')
-    ward=request.POST.get('ward')
-    hno=request.POST.get('hno')
-    place=request.POST.get('place')
-    phone=request.POST.get('phone')
-    email=request.POST.get('email')
-    designation=request.POST.get('designation')
-    age=request.POST.get('age')
-    gender=request.POST.get('gender')
-    l=Login(username=uname,password=pwd,usertype='user')
-    l.save()
-    a=User(fname=fname,lname=lname,hname=hname,ward=ward,hno=hno,place=place,age=age,gender=gender,phone=phone,email=email,designation=designation,login_id=l.pk)
-    a.save()
-    response = {
-        'status': 'success',
-        'message': 'Registration successful',
-    }
+# def reguser(request):
+#     uname=request.POST.get('uname')
+#     pwd=request.POST.get('password')
+#     fname=request.POST.get('first_name')
+#     lname=request.POST.get('last_name')
+#     hname=request.POST.get('hname')
+#     ward=request.POST.get('ward')
+#     hno=request.POST.get('hno')
+#     place=request.POST.get('place')
+#     phone=request.POST.get('phone')
+#     email=request.POST.get('email')
+#     designation=request.POST.get('designation')
+#     age=request.POST.get('age')
+#     gender=request.POST.get('gender')
+#     l=Login(username=uname,password=pwd,usertype='user')
+#     l.save()
+#     a=User(fname=fname,lname=lname,hname=hname,ward=ward,hno=hno,place=place,age=age,gender=gender,phone=phone,email=email,designation=designation,login_id=l.pk)
+#     a.save()
+#     response = {
+#         'status': 'success',
+#         'message': 'Registration successful',
+#     }
 
-    return JsonResponse(response)
+#     return JsonResponse(response)
+
+from django.http import JsonResponse
+import json
+
+def reguser(request):
+    if request.method == "POST":
+        try:
+            # Try multipart/form-data (Flutter's MultipartRequest)
+            uname = request.POST.get('uname')
+            pwd = request.POST.get('password')
+            fname = request.POST.get('first_name')
+            lname = request.POST.get('last_name')
+            hname = request.POST.get('hname')
+            ward = request.POST.get('ward')
+            hno = request.POST.get('hno')
+            place = request.POST.get('place')
+            phone = request.POST.get('phone')
+            email = request.POST.get('email')
+            designation = request.POST.get('designation')
+            age = request.POST.get('age')
+            gender = request.POST.get('gender')
+
+            # If POST is empty, try JSON body
+            if not uname:
+                data = json.loads(request.body.decode("utf-8"))
+                uname = data.get('uname')
+                pwd = data.get('password')
+                fname = data.get('first_name')
+                lname = data.get('last_name')
+                hname = data.get('hname')
+                ward = data.get('ward')
+                hno = data.get('hno')
+                place = data.get('place')
+                phone = data.get('phone')
+                email = data.get('email')
+                designation = data.get('designation')
+                age = data.get('age')
+                gender = data.get('gender')
+
+            # Save to DB
+            l = Login(username=uname, password=pwd, usertype='user')
+            l.save()
+            a = User(fname=fname, lname=lname, hname=hname, ward=ward,
+                     hno=hno, place=place, age=age, gender=gender,
+                     phone=phone, email=email, designation=designation,
+                     login_id=l.pk)
+            a.save()
+
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Registration successful',
+            })
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=405)
+
 
 def userfeedback(request):
     f=request.POST.get('feedback')

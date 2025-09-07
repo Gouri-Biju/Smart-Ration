@@ -143,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             if (_formKey.currentState!.validate()) {
                               String ip = ipController.text.trim();
                               final sh = await SharedPreferences.getInstance();
-                              sh.setString("url", "http://$ip");
+                              sh.setString("url", ip.toString());
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
