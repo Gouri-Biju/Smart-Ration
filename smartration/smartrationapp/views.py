@@ -588,9 +588,10 @@ def reguser(request):
             l = Login(username=uname, password=pwd, usertype='user')
             l.save()
             a = User(fname=fname, lname=lname, hname=hname, ward=ward,
-                     hno=hno, place=place, age=age, gender=gender,
-                     phone=phone, email=email, designation=designation,
-                     login_id=l.pk)
+         hno=hno, place=place, age=age, gender=gender,
+         phone=phone, email=email, designation=designation,
+         login=l.pk)  
+
             a.save()
 
             return JsonResponse({
