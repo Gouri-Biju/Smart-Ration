@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'smartration.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=('postgresql://postgres:Gouri%401902@db.wargbclsjsfomlcopict.supabase.co:5432/postgres')
+        default=os.environ.get("DATABASE_URL")
     )
 }
 
