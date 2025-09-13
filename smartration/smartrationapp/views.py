@@ -747,19 +747,16 @@ def userslot(request):
     uid=ui.pk
     date=request.POST.get('date')
     time=request.POST.get('time')
-    try:
-        a=Buy.objects.filter(user_id=uid, status='Payement Done')
-        a.update(status='slot booked')
-        o=TimeAllocate(date=date, time=time, status ='requested by user',user_id=uid,shop_id=sid)
-        o.save()
-        response = {
-            'status':'success',
-            'message':'redirecting',
-        }
-    except:
-         response = {
-            'message':'Complete the purchace',
-        }
+
+    a=Buy.objects.filter(user_id=uid, status='Payement Done')
+    a.update(status='slot booked')
+    o=TimeAllocate(date=date, time=time, status ='requested by user',user_id=uid,shop_id=sid)
+    o.save()
+    response = {
+        'status':'success',
+        'message':'redirecting',
+    }
+
 
     return JsonResponse(response)
 

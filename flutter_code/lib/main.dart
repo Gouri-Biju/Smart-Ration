@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _loadUrl() async {
     SharedPreferences sh = await SharedPreferences.getInstance();
-    await sh.setString("url", "https://smart-ration-python-django-flutter.onrender.com");
+    await sh.setString("url", "http://192.168.29.230:8002");
 
     // Wait for 2 seconds before navigating
     await Future.delayed(const Duration(seconds: 5));
