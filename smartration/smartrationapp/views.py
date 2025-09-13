@@ -748,20 +748,20 @@ def userslot(request):
     date=request.POST.get('date')
     time=request.POST.get('time')
     try:
-        a=Buy.objects.filter(user_id=uid, status='slot booked')
-        response = {
-            'status':'success',
-            'message':'Complete the Purchase'
-        }
-    except:
+        a=Buy.objects.get(user_id=uid, status='Payement Done')
         o=TimeAllocate(date=date, time=time, status ='requested by user',user_id=uid,shop_id=sid)
         o.save()
-        a=Buy.objects.get(user_id=uid, status='Payement Done')
+        
         a.status='slot booked'
         response = {
             'status':'success',
-            'message':'redirecting'
+            'message':'redirecting',
         }
+    except:
+         response = {
+            'message':'Complete the purchace',
+        }
+
     return JsonResponse(response)
 
 def cart(request):

@@ -38,6 +38,18 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController uname = TextEditingController();
   TextEditingController pwd = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize URL and navigate after 2 seconds
+    _loadUrl();
+  }
+
+  Future<void> _loadUrl() async {
+    SharedPreferences sh = await SharedPreferences.getInstance();
+    await sh.setString("url", "https://smart-ration-a53u.onrender.com");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,11 +171,11 @@ class _LoginPageState extends State<LoginPage> {
                                       }
                                     } catch (e) {
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content: Text(
-                                            'An error occurred. Please try again.',
+                                            'An error occurred. Please try again. $e',
                                           ),
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         ),
                                       );
                                     }
