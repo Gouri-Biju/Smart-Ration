@@ -743,7 +743,7 @@ def usershops(request):
 def userslot(request):
     sid=request.POST.get('sid')
     u=request.POST.get('uid')
-    uid=User.objects.get(login_id=u)
+    uid=User.objects.get(login_id=u.pk)
     date=request.POST.get('date')
     time=request.POST.get('time')
     try:
