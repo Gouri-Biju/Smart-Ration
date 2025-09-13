@@ -43,7 +43,7 @@ urlpatterns = [
     path('sktime',views.sktime),
     path('skrating',views.skrating),
     path('rc',views.rc),
-    path('verify/<id>/<q>',views.verify),
+    path('verify/<int:product_id>/<int:quantity>/<int:slot_id>/<int:tid>/', views.verify),
     path('viewslotproducts/<id>',views.viewslotproducts),
 
 

@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _loadUrl() async {
     SharedPreferences sh = await SharedPreferences.getInstance();
-    await sh.setString("url", "http://192.168.29.230:8002");
+    await sh.setString("url", "https://smart-ration-python-django-flutter.onrender.com");
   }
 
   @override

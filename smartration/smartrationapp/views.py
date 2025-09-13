@@ -433,9 +433,13 @@ def viewslotproducts(request, id):
     })
 
 
+
 def verify(request, product_id, quantity, slot_id, tid):
-    stock_id = request.session.get('sid')
-    s = get_object_or_404(StockDetail, product_id=product_id, stock_id=stock_id)
+    shop_id = request.session.get('sid')
+    s = StockDetail.objects.filter(
+        product_id=product_id,
+        stock__shop_id=shop_id
+    ).order_by('-stock__date').first()
 
     s.kiloorlitter = int(s.kiloorlitter) - int(quantity)
     s.save()
@@ -449,7 +453,6 @@ def verify(request, product_id, quantity, slot_id, tid):
         request.session.modified = True
 
     return redirect(f'/viewslotproducts/{slot_id}')
-
 
 def skrating(request):
     a=Rating.objects.all()
