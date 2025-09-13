@@ -748,7 +748,7 @@ def userslot(request):
     date=request.POST.get('date')
     time=request.POST.get('time')
     try:
-        a=Buy.objects.get(user_id=uid, status='slot booked')
+        a=Buy.objects.filter(user_id=uid, status='slot booked')
         response = {
             'status':'success',
             'message':'Complete the Purchase'
