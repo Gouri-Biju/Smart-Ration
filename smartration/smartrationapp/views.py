@@ -775,8 +775,6 @@ def cart(request):
     amt = a.amount
     try:
         b=Buy.objects.get(user_id=u, status='payment pending')
-        b.tamount += amt
-        b.save()
         try:
             o=BuyDetail.objects.get(product_id=p, buy_id=b.pk)
             response={
@@ -785,6 +783,8 @@ def cart(request):
             }
         except BuyDetail.DoesNotExist:
             c=BuyDetail(quantity=q,amount= amt, buy_id=b.pk,product_id=p)
+            b.tamount += amt
+            b.save()
             c.save()
             response={
             'status':'success',
